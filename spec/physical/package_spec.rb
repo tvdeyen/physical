@@ -233,7 +233,31 @@ RSpec.describe Physical::Package do
     subject { FactoryBot.build(:physical_package) }
 
     it 'has plausible attributes' do
-      expect(subject.weight).to eq(Measured::Weight(1327.37, :g))
+      expect(subject.weight).to eq(Measured::Weight(0, :g))
+    end
+
+    context 'with items' do
+      subject { FactoryBot.build(:physical_package, :with_items) }
+
+      it 'has plausible attributes' do
+        expect(subject.weight).to eq(Measured::Weight(100, :g))
+      end
+    end
+
+    context 'with container' do
+      subject { FactoryBot.build(:physical_package, :with_container) }
+
+      it 'has plausible attributes' do
+        expect(subject.weight).to eq(Measured::Weight(1227.49, :g))
+      end
+    end
+
+    context 'with items and container' do
+      subject { FactoryBot.build(:physical_package, :with_container, :with_items) }
+
+      it 'has plausible attributes' do
+        expect(subject.weight).to eq(Measured::Weight(1327.37, :g))
+      end
     end
   end
 
